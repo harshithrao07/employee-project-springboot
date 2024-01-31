@@ -15,20 +15,14 @@ public class Employee {
     private String lastname;
     private String email;
     private String role;
-    private LocalDate dob;
-
-    @Transient
-    private Integer age;
-
     public Employee() {
     }
 
-    public Employee(String firstname, String lastname, String email, String role , LocalDate dob) {
+    public Employee(String firstname, String lastname, String email, String role) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.role = role;
-        this.dob = dob;
     }
 
     public Integer getId() {
@@ -63,18 +57,6 @@ public class Employee {
         this.email = email;
     }
 
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public Integer getAge() {
-        return Period.between(dob, LocalDate.now()).getYears();
-    }
-
     public String getRole() {
         return role;
     }
@@ -91,8 +73,6 @@ public class Employee {
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
-                ", dob=" + dob +
-                ", age=" + age +
                 '}';
     }
 }

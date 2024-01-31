@@ -26,8 +26,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public void addEmployee(@RequestBody Employee employee) {
-        employeeService.addEmployee(employee);
+    public ResponseEntity<String> addEmployee(@RequestBody Employee employee) {
+        return employeeService.addEmployee(employee);
     }
 
     @DeleteMapping(path = "{employeeId}")
@@ -36,11 +36,11 @@ public class EmployeeController {
     }
 
     @PutMapping(path = "{employeeId}")
-    public void updateEmployee(
+    public ResponseEntity<String> updateEmployee(
             @PathVariable("employeeId") Integer employeeId,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String role
     ) {
-        employeeService.updateEmployee(employeeId, role, email);
+        return employeeService.updateEmployee(employeeId, role, email);
     }
 }

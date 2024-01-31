@@ -31,12 +31,14 @@ public class EmployeeService {
         }
     }
 
-    public void addEmployee(Employee employee) {
+    public ResponseEntity<String> addEmployee(Employee employee) {
         Optional<Employee> employeeOptional = employeeRepository.findEmployeeByEmail(employee.getEmail());
         if(employeeOptional.isPresent()) {
             throw new IllegalStateException("Email Taken Already");
         }
         employeeRepository.save(employee);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Added new Employee.");
     }
 
     public ResponseEntity<String> deleteEmployee(Integer employeeId) {
@@ -50,7 +52,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void updateEmployee(Integer employeeId, String role, String email) {
+    public ResponseEntity<String> updateEmployee(Integer employeeId, String role, String email) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Employee with id " + employeeId + " does not exist."
@@ -68,5 +70,7 @@ public class EmployeeService {
             employee.setEmail(email);
         }
 
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Updated Employee successfully.");
     }
 }
