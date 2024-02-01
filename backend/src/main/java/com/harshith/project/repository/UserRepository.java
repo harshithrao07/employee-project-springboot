@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
+import java.util.Objects;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -34,22 +36,35 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role(Role.USER)
                     .build();
+            Optional<User> optionalUser = repository.findByEmail(request.getEmail());
+            if(optionalUser.isPresent()) {
+                return AuthenticationResponse.builder().message("Email address is already registered").build();
+            }
             repository.save(user);
             var jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder().token(jwtToken).build();
         }
 
         public AuthenticationResponse authenticate(AuthenticateRequest request) {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
-                    )
-            );
-            var user = repository.findByEmail(request.getEmail())
-                    .orElseThrow();
-            var jwtToken = jwtService.generateToken(user);
-            return AuthenticationResponse.builder().token(jwtToken).build();
+            try {
+                authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(
+                                request.getEmail(),
+                                request.getPassword()
+                        )
+                );
+                var user = repository.findByEmail(request.getEmail())
+                        .orElseThrow();
+
+                if(passwordEncoder.matches(request.getPassword(), user.getPassword())){
+                    var jwtToken = jwtService.generateToken(user);
+                    return AuthenticationResponse.builder().token(jwtToken).build();
+                } else {
+                    return AuthenticationResponse.builder().message("Password entered is incorrect.").build();
+                }
+            } catch (Exception e) {
+                return AuthenticationResponse.builder().message("Authentication failed.").build();
+            }
         }
     }
 }
