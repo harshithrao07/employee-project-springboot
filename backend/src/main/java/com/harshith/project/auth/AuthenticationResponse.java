@@ -1,5 +1,6 @@
 package com.harshith.project.auth;
 
+import com.harshith.project.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,5 @@ public class AuthenticationResponse {
 
     private String token;
     private String message;
+    private User user;
 }
