@@ -1,5 +1,5 @@
+import { Button } from '@material-tailwind/react'
 import React from 'react'
-import { Button } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Header = () => {
@@ -13,14 +13,14 @@ const Header = () => {
     }
 
     return (
-        <div style={{width: "100%"}}>
-            <div className="header">
-                <h1>Employee Management App</h1>
-                
-                {token && <Button onClick={handleClick}>
-                    Logout
-                </Button>}
-            </div>
+        <div className='flex justify-between p-5 bar navbar'>
+            <Link to="/">
+                <h1 className='text-2xl font-bold uppercase'>Employee Management App</h1>
+            </Link>
+
+            { token && <Button size='sm' ripple={true} onClick={handleClick}>
+                Logout
+            </Button>}
         </div>
     )
 }
