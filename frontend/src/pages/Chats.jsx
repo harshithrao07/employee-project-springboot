@@ -24,7 +24,7 @@ const Chats = () => {
 
     const connect = () => {
         let Sock = new SockJS('http://localhost:8080/ws')
- 
+
         stompClient = over(Sock);
         stompClient.connect({}, onConnected, onError);
     }
@@ -117,68 +117,70 @@ const Chats = () => {
 
     return (
         <div>
-            <div className='flex'>
-                <div>
+            <div className='grid grid-cols-5 p-5 h-screen my-10 relative'>
+                <div className='bar text-gray-400 rounded-l-md border-primary-100 border'>
                     <ul>
-                        <li>ORGANIZATION CHATROOM</li>
+                        <li onClick={() => {setTab('CHATROOM')}} className={tab === 'CHATROOM' && "active"}>ORGANIZATION CHATROOM</li>
                         {
                             [...privateChats.keys()].map((name, index) => (
-                                <li key={index} onClick={() => { setTab(name) }}>{name}</li>
+                                <li className={tab === name && "active"} key={index} onClick={() => { setTab(name) }}>{name}</li>
                             ))
                         }
                     </ul>
                 </div>
-                {
-                    tab === "CHATROOM" &&
-                    <div>
-                        <ul>
-                            {
-                                publicChats.map((chat, index) => (
-                                    <li key={index}>
-                                        {chat.senderName !== username && <div>{chat.senderName}</div>}
-                                        <div>{chat.message}</div>
-                                        {chat.senderName === username && <div>{chat.senderName}</div>}
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                <div className='col-span-4 bg-black border border-primary-100 rounded-r-md'>
+                    {
+                        tab === "CHATROOM" &&
+                        <div className='flex flex-col h-full'>
+                            <ul className='h-[90%] border-b border-primary-100 mb-auto'>
+                                {
+                                    publicChats.map((chat, index) => (
+                                        <li className='flex flex-col w-auto' key={index}>
+                                            {chat.senderName !== username && <div>{chat.senderName}</div>}
+                                            <div>{chat.message}</div>
+                                            {chat.senderName === username && <div>{chat.senderName}</div>}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
 
-                        <div>
-                            <input type='text' placeholder='Enter the message' value={userData.message} onChange={handleMessage} />
-                            <IconButton onClick={sendValue}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                </svg>
-                            </IconButton>
+                            <div className='flex justify-center items-center gap-x-4 py-2 mt-auto h-[10%]'>
+                                <input className='w-11/12 my-auto' type='text' placeholder='Enter the message' value={userData.message} onChange={handleMessage} />
+                                <IconButton size='md' onClick={sendValue}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                    </svg>
+                                </IconButton>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
 
-                {
-                    tab !== "CHATROOM" &&
-                    <div>
-                        <ul>
-                            {
-                                [...privateChats.get(tab)].map((chat, index) => (
-                                    <li key={index}>
-                                        {chat.senderName !== username && <div>{chat.senderName}</div>}
-                                        <div>{chat.message}</div>
-                                        {chat.senderName === username && <div>{chat.senderName}</div>}
-                                    </li>
-                                ))
-                            }
-                        </ul>
-
+                    {
+                        tab !== "CHATROOM" &&
                         <div>
-                            <input type='text' placeholder='Enter the message' value={userData.message} onChange={handleMessage} />
-                            <IconButton onClick={sendPrivateValue}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                </svg>
-                            </IconButton>
+                            <ul>
+                                {
+                                    [...privateChats.get(tab)].map((chat, index) => (
+                                        <li key={index}>
+                                            {chat.senderName !== username && <div>{chat.senderName}</div>}
+                                            <div>{chat.message}</div>
+                                            {chat.senderName === username && <div>{chat.senderName}</div>}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+
+                            <div>
+                                <input type='text' placeholder='Enter the message' value={userData.message} onChange={handleMessage} />
+                                <IconButton onClick={sendPrivateValue}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                    </svg>
+                                </IconButton>
+                            </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
 
         </div>

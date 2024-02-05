@@ -189,7 +189,7 @@ export default function Dashboard() {
                 Add Employee
             </Button>
 
-            <div className="my-8">
+            <div className="my-8 bg-black">
                 <table>
                     <thead>
                         <tr className="uppercase bar">
@@ -200,7 +200,7 @@ export default function Dashboard() {
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="text-primary-100">
+                    <tbody className="text-gray-400">
                         {
                             employees.length > 0 && renderEmployees()
                         }

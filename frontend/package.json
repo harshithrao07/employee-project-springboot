@@ -19,6 +19,7 @@
     "sockjs-client": "^1.6.1",
     "stompjs": "^2.3.3"
   },
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
