@@ -8,10 +8,13 @@ module.exports = withMT({
   ],
   theme: {
     extends: {
-      color : {
+      colors : {
         primary : {
           100: "#ffffff2e"
         }
+      },
+      fontFamily : {
+        body: ['Poppins']
       }
     }
   },

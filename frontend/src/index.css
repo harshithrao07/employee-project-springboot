@@ -12,6 +12,10 @@
     background-size: cover;
   }
 
+  body>* {
+    font-family: 'Poppins';
+  }
+
   .bar {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(3px);
@@ -26,9 +30,7 @@
     border-top: 1px solid rgba(255, 255, 255, 0.18);
   }
 
-  .heading-texts {
-    @apply border-2 cursor-default outline outline-offset-4;
-  }
+
 
   input {
     @apply rounded-sm mb-5 p-1 text-black
@@ -43,5 +45,5 @@
   }
 
   label {
-    @apply mb-1 text-xs font-semibold
+    @apply mb-1 text-xs font-semibold text-white font-body
   }

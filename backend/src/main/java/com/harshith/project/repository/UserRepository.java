@@ -42,7 +42,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             }
             repository.save(user);
             var jwtToken = jwtService.generateToken(user);
-            return AuthenticationResponse.builder().token(jwtToken).user(user).build();
+            return AuthenticationResponse.builder().token(jwtToken).username(user.getUsername()).build();
         }
 
         public AuthenticationResponse authenticate(AuthenticateRequest request) {
@@ -58,7 +58,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
                 if(passwordEncoder.matches(request.getPassword(), user.getPassword())){
                     var jwtToken = jwtService.generateToken(user);
-                    return AuthenticationResponse.builder().token(jwtToken).user(user).build();
+                    return AuthenticationResponse.builder().token(jwtToken).username(user.getUsername()).build();
                 } else {
                     return AuthenticationResponse.builder().message("Password entered is incorrect.").build();
                 }

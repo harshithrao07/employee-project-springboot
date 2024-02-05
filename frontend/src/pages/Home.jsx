@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const Home = () => {
     return (
         <div className='flex flex-col justify-center items-center min-h-screen main'>
-            <div className='heading-texts p-5 bar'>
+            <div className='heading-texts p-5 bar cursor-default border border-[#ffffff2e] rounded-md'>
                 <h1 className='text-4xl font-bold'>Welcome to Employee Management App</h1>
             </div>
             <div className='flex flex-col items-center mt-8 gap-y-3 font-medium text-lg'>

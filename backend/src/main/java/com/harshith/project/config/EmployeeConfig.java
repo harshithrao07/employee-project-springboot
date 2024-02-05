@@ -31,14 +31,14 @@ public class EmployeeConfig {
             Employee pam = new Employee(
                     "Pam",
                     "Beesly",
-                    "pam@gmail.com",
+                    "pambeesly@gmail.com",
                     "Receptionist"
             );
 
             Employee dwight = new Employee(
                     "Dwight",
                     "Schrute",
-                    "dwightshrute@gmail.com",
+                    "dwightschrute@gmail.com",
                     "Salesman"
             );
 

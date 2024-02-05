@@ -16,7 +16,7 @@ const Login = () => {
     }, [])
 
     useEffect(() => {
-        if(localStorage.getItem("token"))
+        if(sessionStorage.getItem("token"))
         {
             navigate("/dashboard")
         }
@@ -40,14 +40,16 @@ const Login = () => {
 
         if (user.email !== "" && user.password !== "") {
             const res = await axios.post("http://localhost:8080/api/v1/auth/authenticate", user)
-            console.log(res)
+            
             if (res.data) {
                 if (res.data.message) {
                     alert(res.data.message)
                     return
                 }
                 const token = res.data.token;
-                localStorage.setItem("token", token);
+                sessionStorage.setItem("token", token);
+                const username = res.data.username;
+                sessionStorage.setItem("username", username)
                 navigate("/dashboard");
             } else {
                 alert('There seems to be a problem try again later.')

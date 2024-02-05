@@ -22,7 +22,7 @@ const Signup = () => {
     }
 
     useEffect(() => {
-        if(localStorage.getItem("token"))
+        if(sessionStorage.getItem("token"))
         {
             navigate("/dashboard")
         }
@@ -40,7 +40,9 @@ const Signup = () => {
                     return
                 }
                 const token = res.data.token;
-                localStorage.setItem("token", token);
+                sessionStorage.setItem("token", token);
+                const username = res.data.username
+                sessionStorage.setItem("username", username);
                 navigate("/dashboard");
             } else {
                 alert('There seems to be a problem try again later.')
